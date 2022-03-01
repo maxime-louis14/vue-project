@@ -80,6 +80,9 @@ const Home = {
   template: "#home",
   name: "Home",
   data: () => {
+new Vue({
+  el: "#app",
+  data() {
     return {
       // On peux egalement fait comme ceci : (products: products,)
       products,
@@ -105,9 +108,9 @@ const Home = {
         }, 300);
       })
     }
-  },
+  }
 
-};
+}
 
 const UserSettings = {
   template: "<h1>UserSettings</h1>",
@@ -119,10 +122,6 @@ const WishList = {
   name: "WishList",
 };
 
-const ShoppingCart = {
-  template: "<h1>ShoppingCart</h1>",
-  name: "ShoppingCart",
-};
 
 // Router
 const router = new VueRouter({
@@ -130,10 +129,15 @@ const router = new VueRouter({
     { path: "/", component: Home, name: "Home" },
     { path: "/user-settings", component: UserSettings, name: "UserSettings" },
     { path: "/wish-list", component: WishList, name: "WishListe" },
-    { path: "/shopping-cart", component: ShoppingCart, name: "ShoppingCart" },
   ],
+  mounted() {
+    axios.get("http://vps-a47222b1.vps.ovh.net/TShirt")
+    .then((response) => {
+      this.Details = response.data
+    })
+  }
 });
 
 const vue = new Vue({
   router,
-}).$mount("#app");
+}).$mount("#app")
